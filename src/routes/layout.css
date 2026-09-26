@@ -1,2 +1,31 @@
-@import 'tailwindcss';
-@plugin '@tailwindcss/typography';
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-primary: #fcfbf7;
+    --bg-card: #f4f3ed;
+    --text-primary: #1a1917;
+    --text-muted: #66635b;
+    --gold: #b8972e;
+    --border-color: #e5e3db;
+  }
+
+  .dark {
+    --bg-primary: #0e0d0b;
+    --bg-card: #161512;
+    --text-primary: #f4f3ed;
+    --text-muted: #a3a099;
+    --gold: #d4af37;
+    --border-color: #272520;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}

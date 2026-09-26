@@ -2,13 +2,15 @@
     import About from '$lib/Components/About.svelte';
     import Shop from '$lib/Components/Shop.svelte';
 	import Contact from '$lib/Components/Contact.svelte';
+	import Hero from '$lib/Components/Hero.svelte'
 </script>
 
 <svelte:head>
-	<title>BettyDiction Academy — English Diction Coaching</title>
+	<title>BettyDiction</title>
+
 </svelte:head>
 
-<!-- Hero -->
+<!-- Hero
 <section class="bg-[#F5F0E1] text-center px-6 py-20">
 	<h1 class="text-3xl md:text-5xl font-semibold text-[#1C1C1C] max-w-3xl mx-auto leading-tight">
 		Master English diction with precision and confidence
@@ -31,7 +33,8 @@
 			About
 		</a>
 	</div>
-</section>
+</section> -->
+<Hero />
 
 <About />
 

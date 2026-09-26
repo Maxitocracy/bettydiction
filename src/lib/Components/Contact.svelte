@@ -1,48 +1,154 @@
-<!-- Contact info -->
-<section class="bg-[#F5F0E1] px-6 py-16">
-	<div class="max-w-4xl mx-auto text-center">
-		<h2 class="text-2xl md:text-3xl font-semibold text-[#1C1C1C] mb-3">Get in touch</h2>
-		<p class="text-[#5a5a55] mb-10">
-			Have a question about a lesson plan or need help with your order? Reach out any of these ways.
-		</p>
+<script lang="ts">
+  import { Mail, Phone, MapPin, Send, CheckCircle2 } from '@lucide/svelte';
 
-		<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 text-left">
-			<div class="bg-white rounded-lg p-6 border border-[#e5ded0]">
-				<div class="w-10 h-10 rounded-full bg-[#D4AF37] flex items-center justify-center mb-4">
-					<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1C1C1C" stroke-width="2">
-						<path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-					</svg>
-				</div>
-				<h3 class="font-medium text-[#1C1C1C] mb-1">WhatsApp</h3>
-				<a href="https://wa.me/2349022057861" class="text-sm text-[#5a5a55] hover:text-[#D4AF37]">
-					+234 902 205 7861
-				</a>
-			</div>
+  let name = $state('');
+  let email = $state('');
+  let message = $state('');
+  let isSubmitted = $state(false);
 
-			
+  function handleSubmit(e: SubmitEvent) {
+    e.preventDefault();
+    if (!name || !email || !message) return;
+    
+    // Construct the mailto link parameters
+    const recipient = 'bettydiction@gmail.com';
+    const subject = encodeURIComponent(`Inquiry from ${name} via BettyDiction Website`);
+    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
 
-			<div class="bg-white rounded-lg p-6 border border-[#e5ded0]">
-				<div class="w-10 h-10 rounded-full bg-[#D4AF37] flex items-center justify-center mb-4">
-					<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1C1C1C" stroke-width="2">
-						<path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-					</svg>
-				</div>
-				<h3 class="font-medium text-[#1C1C1C] mb-1">Email</h3>
-				<a href="mailto:hello@bettydiction.com" class="text-sm text-[#5a5a55] hover:text-[#D4AF37]">
-					bettydiction@gmail.com
-				</a>
-			</div>
+    // Trigger the email client
+    window.location.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
 
-			<div class="bg-white rounded-lg p-6 border border-[#e5ded0]">
-				<div class="w-10 h-10 rounded-full bg-[#D4AF37] flex items-center justify-center mb-4">
-					<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1C1C1C" stroke-width="2">
-						<path d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-						<path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-					</svg>
-				</div>
-				<h3 class="font-medium text-[#1C1C1C] mb-1">Location</h3>
-				<p class="text-sm text-[#5a5a55]">Lagos, Nigeria</p>
-			</div>
-		</div>
-	</div>
+    // Show the success state
+    isSubmitted = true;
+    
+    // Reset fields after a delay
+    setTimeout(() => {
+      name = '';
+      email = '';
+      message = '';
+    }, 3000);
+  }
+</script>
+
+<section id="contact" class="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-[var(--border-color)]">
+  <div class="text-center max-w-3xl mx-auto mb-16">
+    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-md border border-[var(--gold)]/20 bg-[var(--gold)]/10 text-[var(--gold)] text-xs font-bold uppercase tracking-wider mb-4">
+      Get in Touch
+    </div>
+    <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight">
+      We’d Love to <span class="text-[var(--gold)]">Hear From You</span>
+    </h2>
+    <p class="text-[var(--text-muted)] mt-4 text-base sm:text-lg font-light leading-relaxed">
+      Have questions about our diction lesson plans, teacher training resources, or custom coaching? Drop us a message below.
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+    <!-- Left Column: Contact Information Cards -->
+    <div class="space-y-6 lg:col-span-1">
+      <div class="p-6 rounded-2xl bg-[var(--bg-card)] border border-[var(--border-color)] shadow-sm flex items-start gap-4">
+        <div class="w-12 h-12 rounded-xl bg-[var(--gold)]/10 border border-[var(--gold)]/20 text-[var(--gold)] flex items-center justify-center shrink-0">
+          <Mail class="w-5 h-5" />
+        </div>
+        <div>
+          <h4 class="text-xs uppercase font-bold tracking-wider text-[var(--text-muted)] mb-1">Email Address</h4>
+          <a href="mailto:bettydiction@gmail.com" class="text-sm font-semibold text-[var(--text-primary)] hover:text-[var(--gold)] transition-colors">
+            bettydiction@gmail.com
+          </a>
+        </div>
+      </div>
+
+      <div class="p-6 rounded-2xl bg-[var(--bg-card)] border border-[var(--border-color)] shadow-sm flex items-start gap-4">
+        <div class="w-12 h-12 rounded-xl bg-[var(--gold)]/10 border border-[var(--gold)]/20 text-[var(--gold)] flex items-center justify-center shrink-0">
+          <Phone class="w-5 h-5" />
+        </div>
+        <div>
+          <h4 class="text-xs uppercase font-bold tracking-wider text-[var(--text-muted)] mb-1">Phone & WhatsApp</h4>
+          <a href="tel:+2348032320712" class="text-sm font-semibold text-[var(--text-primary)] hover:text-[var(--gold)] transition-colors">
+            +234 (803) 232-0712
+          </a>
+        </div>
+      </div>
+
+      <div class="p-6 rounded-2xl bg-[var(--bg-card)] border border-[var(--border-color)] shadow-sm flex items-start gap-4">
+        <div class="w-12 h-12 rounded-xl bg-[var(--gold)]/10 border border-[var(--gold)]/20 text-[var(--gold)] flex items-center justify-center shrink-0">
+          <MapPin class="w-5 h-5" />
+        </div>
+        <div>
+          <h4 class="text-xs uppercase font-bold tracking-wider text-[var(--text-muted)] mb-1">Location</h4>
+          <p class="text-sm font-semibold text-[var(--text-primary)]">
+            Lagos, Nigeria
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Interactive Form -->
+    <div class="p-8 rounded-3xl bg-[var(--bg-card)] border border-[var(--border-color)] shadow-lg lg:col-span-2">
+      {#if isSubmitted}
+        <div class="py-16 text-center flex flex-col items-center justify-center space-y-4">
+          <div class="w-16 h-16 rounded-full bg-[var(--gold)]/10 border border-[var(--gold)]/30 text-[var(--gold)] flex items-center justify-center">
+            <CheckCircle2 class="w-8 h-8" />
+          </div>
+          <h3 class="text-2xl font-bold text-[var(--text-primary)]">Opening Email Client...</h3>
+          <p class="text-[var(--text-muted)] text-sm max-w-md font-light">
+            Thank you for reaching out to BettyDiction Academy. Your message details have been formatted for your email client to send to bettydiction@gmail.com.
+          </p>
+          <button 
+            onclick={() => isSubmitted = false}
+            class="mt-4 px-6 py-2.5 rounded-xl font-bold text-xs bg-[var(--gold)] text-black hover:opacity-95 transition-all"
+          >
+            Send Another Message
+          </button>
+        </div>
+      {:else}
+        <form onsubmit={handleSubmit} class="space-y-6">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+              <label for="name" class="block text-xs uppercase font-bold tracking-wider text-[var(--text-muted)] mb-2">Your Name</label>
+              <input 
+                type="text" 
+                id="name" 
+                bind:value={name} 
+                required 
+                placeholder="Enter your name"
+                class="w-full px-4 py-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-primary)] text-[var(--text-primary)] focus:border-[var(--gold)] focus:outline-none transition-colors text-sm"
+              />
+            </div>
+            <div>
+              <label for="email" class="block text-xs uppercase font-bold tracking-wider text-[var(--text-muted)] mb-2">Email Address</label>
+              <input 
+                type="email" 
+                id="email" 
+                bind:value={email} 
+                required 
+                placeholder="name@example.com"
+                class="w-full px-4 py-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-primary)] text-[var(--text-primary)] focus:border-[var(--gold)] focus:outline-none transition-colors text-sm"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label for="message" class="block text-xs uppercase font-bold tracking-wider text-[var(--text-muted)] mb-2">Your Message</label>
+            <textarea 
+              id="message" 
+              bind:value={message} 
+              required 
+              rows="5" 
+              placeholder="How can we assist your learning or teaching goals?"
+              class="w-full px-4 py-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-primary)] text-[var(--text-primary)] focus:border-[var(--gold)] focus:outline-none transition-colors text-sm resize-none"
+            ></textarea>
+          </div>
+
+          <button 
+            type="submit" 
+            class="w-full sm:w-auto px-8 py-4 rounded-xl font-bold bg-[var(--gold)] text-black hover:opacity-95 transition-all shadow-md text-sm flex items-center justify-center gap-2 group"
+          >
+            <Send class="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            <span>Send Message</span>
+          </button>
+        </form>
+      {/if}
+    </div>
+  </div>
 </section>
