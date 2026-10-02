@@ -76,9 +76,11 @@
           </h3>
 
           <!-- Description -->
-          <p class="text-sm text-[var(--text-muted)] leading-relaxed font-light mb-6">
-            {product.description}
-          </p>
+          {#if product.description}
+            <p class="text-sm text-[var(--text-muted)] leading-relaxed font-light mb-6">
+              {product.description}
+            </p>
+          {/if}
         </div>
 
         <!-- Card Footer: Price & Checkout CTA -->
@@ -86,7 +88,7 @@
           <div>
             <span class="text-[11px] uppercase tracking-wider text-[var(--text-muted)] block font-medium">Investment</span>
             <span class="text-2xl font-black text-[var(--gold)] tracking-tight">
-              ₦{product.priceNGN.toLocaleString()}
+              {product.price}
             </span>
           </div>
 
