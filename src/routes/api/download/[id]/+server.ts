@@ -1,6 +1,6 @@
 import { error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { PAYSTACK_SECRET_KEY } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -22,11 +22,16 @@ export const GET: RequestHandler = async ({ url, params }) => {
     throw error(404, 'Invalid product identifier.');
   }
 
+  const secretKey = env.PAYSTACK_SECRET_KEY;
+  if (!secretKey) {
+    throw error(500, 'Paystack secret key is not configured.');
+  }
+
   try {
     // 1. Verify transaction with Paystack API securely on the server
     const response = await fetch(`https://api.paystack.co/transaction/verify/${reference}`, {
       headers: {
-        Authorization: `Bearer ${PAYSTACK_SECRET_KEY}`
+        Authorization: `Bearer ${secretKey}`
       }
     });
 
